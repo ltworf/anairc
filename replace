@@ -29,8 +29,8 @@ thx,thanks
 ty,thank you
 u,you
 ur,your
-xkè,perché
-xké,perché
+xkÃ¨,perchÃ©
+xkÃ©,perchÃ©
 y,why
 yrs,years
 :borg:,<smile src=\"borg\" />
@@ -42,8 +42,12 @@ yrs,years
 :worf:,<smile src=\"worf\" />
 :ltworf:,<smile src=\"worf\" />
 :Worf:,<smile src=\"worf\" />
+:world:,<smile src=\"world\" />
+:oworld:,<smile src=\"oworld\" />
 :LtWorf:,<smile src=\"worf\" />
 :linux:,<smile src=\"linux\" />
+:panda:,<smile src=\"panda\" />
+:TheOne:,<smile src=\"TheOne\" />
 :reversengineer:,<smile src=\"reversengineer\" />
 :gnu:,<smile src=\"gnu\" />
 :dance:,<smile src=\"dance\" />
