@@ -28,6 +28,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -52,6 +56,7 @@ public class MainG extends JFrame implements MainGui, ActionListener, WindowList
     
     private JTabbedPane tabs=new JTabbedPane();
     private JPopupField txtNick=new JPopupField(Constants.nickname);
+    public TrayIcon trayIcon=null;
 
     
     /**
@@ -64,16 +69,38 @@ public class MainG extends JFrame implements MainGui, ActionListener, WindowList
         this.getContentPane().setLayout(new BorderLayout());
         
         this.addWindowListener(this);
-        
+	
         {//Toolbar
             JToolBar bar=new JToolBar();
             JLabel lblnick=new JLabel("Nickname:");
             bar.add(lblnick);
             bar.add(txtNick);
             this.add(bar,BorderLayout.NORTH);
-            
+	    
             txtNick.addActionListener(this);
         }
+	
+	if(SystemTray.isSupported()) {//TrayIcon
+		SystemTray tray = SystemTray.getSystemTray();
+		
+		Image image = Toolkit.getDefaultToolkit().getImage(Img.getUrl("smiles/world",Img.class));
+		
+		trayIcon= new TrayIcon(image, "Anairc", null);
+		trayIcon.setImageAutoSize(true);
+		
+		try {
+			tray.add(trayIcon);
+		} catch (Exception e) {
+			System.err.println("TrayIcon could not be added.");
+		}
+		
+		//trayIcon.displayMessage("Finished downloading", 
+		//			"Your Java application has finished downloading",TrayIcon.MessageType.INFO);
+		
+		
+	}
+
+
         
         {
             UList ulist=new UList();
@@ -83,10 +110,10 @@ public class MainG extends JFrame implements MainGui, ActionListener, WindowList
             tabs.setMinimumSize(new Dimension(400,400));
             tabs.addChangeListener(new ChangeListener () {
 
-                public void stateChanged(ChangeEvent arg0) {
+                public void stateChanged(ChangeEvent arg0) {//When selecting a tab
                     int sel=tabs.getSelectedIndex();
                     String t=tabs.getTitleAt(sel);
-                    if (t.endsWith(" *")) {
+                    if (t.endsWith(" *")) {//Removes the mark if there is one
                         
                         tabs.setTitleAt(sel, t.substring(0, t.length()-2));
                     }
@@ -130,25 +157,27 @@ public class MainG extends JFrame implements MainGui, ActionListener, WindowList
 
     /**
      * A chat received an event
-     * This event will mark the tab as unread if it hasn't the focus
+     * This event will mark the tab as unread unless it has the focus
      * @param gui
      */
     public void notifyChat(ChatGUI gui) {
+	if (!this.isFocused()) //Changes the trayIcon to show that there is a new message 
+		trayIcon.setImage(Toolkit.getDefaultToolkit().getImage(Img.getUrl("smiles/oworld",Img.class)));
+	
         ChatG g=(ChatG)gui;
         int i=0;
-        for ( i=0;i<tabs.getComponentCount();i++) {
+        for ( i=0;i<tabs.getComponentCount();i++) {//Searches the tab for the chat
             if (tabs.getComponent(i)==g) break;
         }
+
         if (i<tabs.getComponentCount()) {
             if (tabs.getSelectedIndex()!=i) {
-                if (!tabs.getTitleAt(i).endsWith(" *")) {
-                    tabs.setTitleAt(i, tabs.getTitleAt(i)+ " *");
+                if (!tabs.getTitleAt(i).endsWith(" *")) {//If the tab isn't already marked
+                    tabs.setTitleAt(i, tabs.getTitleAt(i)+ " *");//marks it
+		    
                 }
             }
         }
-        
-        
-
     }
 
     /**
@@ -190,7 +219,9 @@ public class MainG extends JFrame implements MainGui, ActionListener, WindowList
     public void windowClosed(WindowEvent arg0) {}
     public void windowIconified(WindowEvent arg0) {}
     public void windowDeiconified(WindowEvent arg0) {}
-    public void windowActivated(WindowEvent arg0) {}
+    public void windowActivated(WindowEvent arg0) {
+	    trayIcon.setImage(Toolkit.getDefaultToolkit().getImage(Img.getUrl("smiles/world",Img.class)));
+    }
     public void windowOpened(WindowEvent arg0) {}
     public void windowDeactivated(WindowEvent arg0) {}
 
