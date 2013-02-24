@@ -12,3 +12,6 @@ clean:
 
 jar:
 	jar cfm ../anairc.jar META-INF/MANIFEST.MF *
+
+start:
+	java anairc.Anairc
