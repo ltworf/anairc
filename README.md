@@ -1,4 +1,5 @@
 anairc
+======
 
 anairc: not an IRC chat
 
@@ -13,3 +14,18 @@ broadcast a lot of crap all the time, it won't make a difference.
 Unfortunately when this was written I didn't know python so it's written in
 Java.
 
+
+Compile
+=======
+
+Just run
+
+```
+$ make
+$ make start
+```
+
+To compile and execute.
+
+If you happen to not have make installed shame on you! Open the Makefile and
+figure it out by yourself.
