@@ -41,8 +41,8 @@ import users.UserList;
 public class UList extends JPanel implements UserListListener, MouseListener {
     
     
-    DefaultListModel usrs = new DefaultListModel();
-    JList lista =new JList(usrs);
+    DefaultListModel<RemoteUser> usrs = new DefaultListModel<RemoteUser>();
+    JList<RemoteUser> lista =new JList<RemoteUser>(usrs);
     
     /**
      * Creates the graphic
@@ -103,12 +103,12 @@ public class UList extends JPanel implements UserListListener, MouseListener {
     public void mouseClicked(MouseEvent arg0) {
         if (arg0.getClickCount()>=2 && arg0.getButton()==MouseEvent.BUTTON1) {
             //Gets the RemoteUser
-            RemoteUser u = (RemoteUser)usrs.get(lista.getSelectedIndex());
+            RemoteUser u = usrs.get(lista.getSelectedIndex());
             if (u!=null) {
                 u.showChat();//Says to it to show the GUI
             }
         } else if (arg0.getClickCount()>=2 && arg0.getButton()==MouseEvent.BUTTON3) {
-            RemoteUser u = (RemoteUser)usrs.get(lista.getSelectedIndex());
+            RemoteUser u = usrs.get(lista.getSelectedIndex());
             if (u!=null) {
                 u.setIgnored(!u.getIgnored());//Ignores an user
                 UserList.getUserList().userChanged(u);//Generates the change event

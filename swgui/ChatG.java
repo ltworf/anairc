@@ -63,8 +63,8 @@ public class ChatG extends JPanel implements ChatGUI, ActionListener{
     private JToggleButton cmdBold = new JToggleButton("B");
     private JToggleButton cmdItalic = new JToggleButton("i");
     private JToggleButton cmdUnderline = new JToggleButton("U");
-    private JComboBox cmbFColor = new JComboBox();
-    private JComboBox cmbBColor = new JComboBox();
+    private JComboBox<String> cmbFColor = new JComboBox<String>();
+    private JComboBox<String> cmbBColor = new JComboBox<String>();
     
     /**
      * Inits the GUI
