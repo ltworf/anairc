@@ -44,7 +44,9 @@ public class Replacer {
      * @return
      */
     public static String replace(String string) {
-    	if (replace==null) loadStrings();
+    	if (replace==null) 
+            if (!loadStrings())
+                return string;
     	
     	for (int i=0;i<replace.length;i++) {
 
