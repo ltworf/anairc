@@ -10,8 +10,8 @@ clean:
 	rm util/*class
 	rm util/log/*class
 
-jar:
+jar: build
 	jar cfm ../anairc.jar META-INF/MANIFEST.MF *
 
-start:
+start: build
 	java anairc.Anairc
